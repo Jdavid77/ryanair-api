@@ -18,10 +18,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
+          echo "Latest tag: $latest_tag"
 
       - name: Bump Version of package.json
         uses: ramonpaolo/bump-version@v2.3.1
         with:
-          tag: ${{ github.ref_name }} # Accessing the context and get the reference_name, that in this case, is the tag that you created(ex: v1.0.0)
+          tag: ${{ steps.get_tag.outputs.latest_tag }}
           commit: true
           branch_to_push: 'main'
