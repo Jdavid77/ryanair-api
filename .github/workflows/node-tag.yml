@@ -1,0 +1,26 @@
+name: Tag Package 
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  node_tag:
+    name: Tag Package Json
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Bump Version of package.json
+        uses: ramonpaolo/bump-version@v2.3.1
+        with:
+          tag: ${{ github.ref_name }} # Accessing the context and get the reference_name, that in this case, is the tag that you created(ex: v1.0.0)
+          commit: true
+          branch_to_push: 'main'
