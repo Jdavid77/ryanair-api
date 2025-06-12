@@ -1,6 +1,9 @@
 FROM node:22-alpine AS base
 
-RUN apk add --no-cache dumb-init
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache dumb-init && \
+    rm -rf /var/cache/apk/*
 
 # Production Dependencies
 FROM base AS deps
