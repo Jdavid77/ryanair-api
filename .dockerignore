@@ -84,3 +84,7 @@ tests/
 Dockerfile
 .dockerignore
 docker-compose*.yml
+
+#Dev
+.claude/
+.devcontainer/
