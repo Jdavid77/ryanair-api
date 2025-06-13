@@ -1,46 +1,46 @@
 name: Docker
-
 on:
   workflow_run:
-    workflows: ["Tag Package "]
+    workflows: ["Tag"]
     types:
       - completed
+    branches: [main]  # Only run on main branch completions
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: write
       packages: write
       id-token: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Fetch tags so we can get the latest version
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Get Package Version
+        id: tag
+        run: |
+          package_version=$(cat package.json | jq -r ".version")
+          echo "package_version=$package_version" >> $GITHUB_OUTPUT
+          echo "Package version: $package_version"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226 # v3.0.0
 
       - name: Log into registry ${{ env.REGISTRY }}
-        if: github.event_name != 'pull_request'
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Get package version
-        id: tag
-        run: |
-          package_version=$(cat package.json | jq ".version")
-          echo "package_version=$package_version" >> $GITHUB_OUTPUT
-          echo "Latest tag: $package_version"
 
       - name: Extract Docker metadata
         id: meta
@@ -50,7 +50,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=raw,value=${{ steps.tag.outputs.new_tag }}
+            type=raw,value=${{ steps.tag.outputs.package_version }}
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
