@@ -1,8 +1,10 @@
 name: Docker
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["Tag Package "]
+    types:
+      - completed
 
 env:
   REGISTRY: ghcr.io
@@ -32,13 +34,13 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Bump version and push tag
+      
+      - name: Get package version
         id: tag
-        uses: anothrNick/github-tag-action@v1 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAG_PREFIX: v
+        run: |
+          package_version=$(cat package.json | jq ".version")
+          echo "package_version=$package_version" >> $GITHUB_OUTPUT
+          echo "Latest tag: $package_version"
 
       - name: Extract Docker metadata
         id: meta

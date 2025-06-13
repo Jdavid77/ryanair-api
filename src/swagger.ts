@@ -1,11 +1,14 @@
 import swaggerJsdoc from 'swagger-jsdoc';
+import { readFileSync } from 'fs';
+
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 const options = {
   definition: {
     openapi: '3.0.0',
     info: {
       title: 'Ryanair API',
-      version: '1.0.0',
+      version: packageJson.version,
       description: 'A production-ready REST API for accessing Ryanair flight data, airports, and fare information',
       contact: {
         name: 'API Support',
@@ -14,7 +17,7 @@ const options = {
     },
     servers: [
       {
-        url: process.env.NODE_ENV === 'production' ? 'https://your-domain.com' : 'http://localhost:3000',
+        url: process.env.NODE_ENV === 'production' ? process.env.API_URL : 'http://localhost:3000',
         description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server'
       }
     ],
