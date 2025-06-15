@@ -3,21 +3,21 @@ name: Trivy
 on:
   workflow_call:
     
-env:
-  IMAGE_NAME: ${{ github.repository }}
-
 jobs:
   trivy-scan:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
       - name: Build Docker image
-        run: docker build -t ${{ env.IMAGE_NAME }}:latest .
+        run: docker build -t ryanair-api:latest .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.30.0
         with:
-          image-ref: "${{ env.IMAGE_NAME }}:latest"
+          image-ref: "ryanair-api:latest"
           format: "table"
           exit-code: "0"
           ignore-unfixed: true
