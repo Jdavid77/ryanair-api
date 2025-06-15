@@ -1,5 +1,7 @@
 # Ryanair API
 
+**Note: The source code was all made by AI, even the README.**
+
 A production-ready Node.js REST API built with Express.js and TypeScript that provides access to Ryanair flight data using the [@2bad/ryanair](https://github.com/2BAD/ryanair) package.
 
 ## Features
