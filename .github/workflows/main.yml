@@ -16,7 +16,7 @@ env:
 
 jobs:
   sast:
-    name: Node SAST
+    name: SAST
     uses: ./.github/workflows/sast.yaml
 
 #   tag:
