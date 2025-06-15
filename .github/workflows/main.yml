@@ -1,0 +1,31 @@
+name: Main
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'           # Ignore documentation changes
+      - '.github/**'      # Ignore workflow changes
+      - 'docker-compose.yml'
+      - '.devcontainer/**'
+      - '.claude/**'
+
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  sast:
+    name: Node SAST
+    uses: ./.github/workflows/sast.yaml
+
+#   tag:
+#     name: Tag
+#     uses: ./.github/workflows/tag.yaml
+
+#   docker:
+#     name: Docker
+#     uses: ./.github/workflows/docker.yaml
+#     secrets: inherit
+    

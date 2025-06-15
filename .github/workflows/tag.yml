@@ -1,19 +1,21 @@
 name: Tag
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_call:
+    outputs:
+      new_tag:
+        description: "The new tag that was created"
+        value: ${{ jobs.node_tag.outputs.new_tag }}
 
 jobs:
   node_tag:
     name: Tag Package Json
-
     runs-on: ubuntu-latest
-
     permissions:
       actions: write
       contents: write
-
+    outputs:
+      new_tag: ${{ steps.tag.outputs.new_tag }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -26,6 +28,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_PREFIX: v
+          PATCH_STRING_TOKEN: "fix:"
+          MINOR_STRING_TOKEN: "feat:"
         
       - name: Bump Version of package.json
         uses: ramonpaolo/bump-version@v2.3.1
