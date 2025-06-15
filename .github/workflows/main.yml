@@ -22,11 +22,11 @@ env:
 jobs:
   sast:
     name: SAST
-    uses: ./.github/workflows/sast.yaml
+    uses: ./.github/workflows/sast.yml
 
   sca:
     name: SCA
-    uses: ./.github/workflows/snyk.yaml
+    uses: ./.github/workflows/snyk.yml
 
 #   docker:
 #     name: Docker
