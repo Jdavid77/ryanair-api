@@ -29,8 +29,8 @@ jobs:
     uses: ./.github/workflows/snyk.yml
     secrets: inherit
 
-  docker:
+  trivy:
     name: Container Scanning
-    uses: ./.github/workflows/trivy.yaml
+    uses: ./.github/workflows/trivy.yml
 
     
