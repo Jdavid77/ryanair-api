@@ -33,8 +33,11 @@ WORKDIR /app
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001
 
+
 COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
 COPY --from=build --chown=nextjs:nodejs /app/dist ./dist
+# Swagger gets version from package.json
+COPY package.json ./package.json
 
 USER nextjs
 
