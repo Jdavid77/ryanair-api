@@ -9,6 +9,10 @@ on:
       - '.devcontainer/**'
       - '.claude/**'
 
+permissions:
+  security-events: write  
+  actions: read          
+  contents: read
 
 env:
   REGISTRY: ghcr.io

@@ -3,11 +3,6 @@ name: SAST
 on:
   workflow_call:
 
-permissions:
-  security-events: write  
-  actions: read          
-  contents: read         
-
 jobs:
   njsscan:
     runs-on: ubuntu-latest
