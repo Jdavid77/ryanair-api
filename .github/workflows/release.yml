@@ -1,0 +1,17 @@
+name: Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Please
+        id: release
+        uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: node
+          package-name: ${{ github.event.repository.name }}
+          token: ${{ secrets.RELEASE_TOKEN }}
