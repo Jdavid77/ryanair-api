@@ -27,6 +27,7 @@ jobs:
   sca:
     name: SCA
     uses: ./.github/workflows/snyk.yml
+    secrets: inherit
 
 #   docker:
 #     name: Docker
