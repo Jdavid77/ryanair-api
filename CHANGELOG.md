@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Jdavid77/ryanair-api/compare/v1.0.0...v1.0.1) (2025-06-15)
+
+
+### Bug Fixes
+
+* add package.json to final stage ([#3](https://github.com/Jdavid77/ryanair-api/issues/3)) ([a463e17](https://github.com/Jdavid77/ryanair-api/commit/a463e17ac81677f7bdb122dfe9a6c018b4a7c0fc))
+
 ## 1.0.0 (2025-06-15)
 
 
