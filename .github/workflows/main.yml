@@ -24,9 +24,9 @@ jobs:
     name: SAST
     uses: ./.github/workflows/sast.yaml
 
-#   tag:
-#     name: Tag
-#     uses: ./.github/workflows/tag.yaml
+  sca:
+    name: SCA
+    uses: ./.github/workflows/snyk.yaml
 
 #   docker:
 #     name: Docker
