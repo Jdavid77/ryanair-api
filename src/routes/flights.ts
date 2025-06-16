@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { getRyanairModule } from '../utils/ryanairClient.js';
+import { ryanairClient } from '../utils/ryanairClient.js';
 import { validateIataParams, validateDateParams, validateRequiredParams } from '../middleware/validation.js';
 import { validatePassengerCount } from '../utils/validation.js';
 import { sendValidationError } from '../utils/responseHelpers.js';
@@ -20,10 +20,10 @@ router.get('/dates',
     try {
       const { from, to } = req.query;
       
-      const flights = await getRyanairModule('flights');
-      const dates = await flights.getDates(from as string, to as string);
+      const dates = await ryanairClient.flights.getDates(from as string, to as string);
       res.json(dates);
     } catch (error) {
+      console.error('Error in /flights/dates:', error);
       next(error);
     }
   }
@@ -158,10 +158,10 @@ router.get('/available',
         availabilityOptions.promoCode = promoCode as string;
       }
       
-      const flights = await getRyanairModule('flights');
-      const availability = await flights.getAvailable(availabilityOptions);
+      const availability = await ryanairClient.flights.getAvailable(availabilityOptions);
       res.json(availability);
     } catch (error) {
+      console.error('Error in /flights/available:', error);
       next(error);
     }
   }

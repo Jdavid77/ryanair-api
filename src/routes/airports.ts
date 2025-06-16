@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { getRyanairModule } from '../utils/ryanairClient.js';
+import { ryanairClient } from '../utils/ryanairClient.js';
 import { validateIataParams } from '../middleware/validation.js';
 
 const router = Router();
@@ -35,40 +35,46 @@ const router = Router();
  */
 router.get('/active', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const airports = await getRyanairModule('airports');
-    const result = await airports.getActive();
-    res.json(result);
+    const result = await ryanairClient.airports.getActive();
+    const filteredResult = result.map((airport: any) => ({
+      name: airport.name,
+      code: airport.code,
+      country: airport.country?.name,
+      timezone: airport.timeZone
+    }));
+    res.json(filteredResult);
   } catch (error) {
+    console.error('Error in /airports/active:', error);
     next(error);
   }
 });
 
 router.get('/active-v3', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const airports = await getRyanairModule('airports');
-    const result = await airports.getActiveV3();
+    const result = await ryanairClient.airports.getActiveV3();
     res.json(result);
   } catch (error) {
+    console.error('Error in /airports/active-v3:', error);
     next(error);
   }
 });
 
 router.get('/closest', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const airports = await getRyanairModule('airports');
-    const airport = await airports.getClosest();
+    const airport = await ryanairClient.airports.getClosest();
     res.json(airport);
   } catch (error) {
+    console.error('Error in /airports/closest:', error);
     next(error);
   }
 });
 
 router.get('/nearby', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const airports = await getRyanairModule('airports');
-    const result = await airports.getNearby();
+    const result = await ryanairClient.airports.getNearby();
     res.json(result);
   } catch (error) {
+    console.error('Error in /airports/nearby:', error);
     next(error);
   }
 });
@@ -107,10 +113,10 @@ router.get('/nearby', async (req: Request, res: Response, next: NextFunction) =>
 router.get('/:code', validateIataParams('code'), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { code } = req.params;
-    const airports = await getRyanairModule('airports');
-    const airport = await airports.getInfo(code);
+    const airport = await ryanairClient.airports.getInfo(code);
     res.json(airport);
   } catch (error) {
+    console.error(`Error in /airports/:code:`, error);
     next(error);
   }
 });
@@ -118,10 +124,16 @@ router.get('/:code', validateIataParams('code'), async (req: Request, res: Respo
 router.get('/:code/destinations', validateIataParams('code'), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { code } = req.params;
-    const airports = await getRyanairModule('airports');
-    const destinations = await airports.getDestinations(code);
-    res.json(destinations);
+    const result = await ryanairClient.airports.getDestinations(code);
+    const filteredResult = result.map((destination: any) => ({
+      name: destination.arrivalAirport.name,
+      code: destination.arrivalAirport.code,
+      country: destination.arrivalAirport.country?.name,
+      timezone: destination.arrivalAirport.timeZone
+    }));
+    res.json(filteredResult);
   } catch (error) {
+    console.error('Error in /airports/:code/destinations:', error);
     next(error);
   }
 });
@@ -129,10 +141,10 @@ router.get('/:code/destinations', validateIataParams('code'), async (req: Reques
 router.get('/:code/schedules', validateIataParams('code'), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { code } = req.params;
-    const airports = await getRyanairModule('airports');
-    const schedules = await airports.getSchedules(code);
+    const schedules = await ryanairClient.airports.getSchedules(code);
     res.json(schedules);
   } catch (error) {
+    console.error('Error in /airports/:code/schedules:', error);
     next(error);
   }
 });
@@ -140,10 +152,10 @@ router.get('/:code/schedules', validateIataParams('code'), async (req: Request, 
 router.get('/:from/routes/:to', validateIataParams('from', 'to'), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { from, to } = req.params;
-    const airports = await getRyanairModule('airports');
-    const routes = await airports.findRoutes(from, to);
+    const routes = await ryanairClient.airports.findRoutes(from, to);
     res.json(routes);
   } catch (error) {
+    console.error('Error in /airports/:from/routes/:to:', error);
     next(error);
   }
 });

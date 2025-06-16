@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { getRyanairModule } from '../utils/ryanairClient.js';
+import { ryanairClient } from '../utils/ryanairClient.js';
 import { validateIataParams, validateDateParams, validateRequiredParams, validateDateRange } from '../middleware/validation.js';
 import { validatePassengerCount } from '../utils/validation.js';
 import { sendValidationError } from '../utils/responseHelpers.js';
@@ -74,8 +74,7 @@ router.get('/cheapest-per-day',
     try {
       const { from, to, startDate, currency } = req.query;
       
-      const fares = await getRyanairModule('fares');
-      const result = await fares.getCheapestPerDay(
+      const result = await ryanairClient.fares.getCheapestPerDay(
         from as string,
         to as string,
         startDate as string,
@@ -84,6 +83,7 @@ router.get('/cheapest-per-day',
       
       res.json(result);
     } catch (error) {
+      console.error('Error in /fares/cheapest-per-day:', error);
       next(error);
     }
   }
@@ -98,8 +98,7 @@ router.get('/daily-range',
     try {
       const { from, to, startDate, endDate, currency } = req.query;
       
-      const fares = await getRyanairModule('fares');
-      const result = await fares.findDailyFaresInRange(
+      const result = await ryanairClient.fares.findDailyFaresInRange(
         from as string,
         to as string,
         startDate as string,
@@ -109,6 +108,7 @@ router.get('/daily-range',
       
       res.json(result);
     } catch (error) {
+      console.error('Error in /fares/daily-range:', error);
       next(error);
     }
   }
@@ -128,8 +128,7 @@ router.get('/cheapest-round-trip',
         return sendValidationError(res, 'Limit must be a number between 1 and 100', 'limit');
       }
       
-      const fares = await getRyanairModule('fares');
-      const roundTrips = await fares.findCheapestRoundTrip(
+      const roundTrips = await ryanairClient.fares.findCheapestRoundTrip(
         from as string,
         to as string,
         startDate as string,
@@ -140,6 +139,7 @@ router.get('/cheapest-round-trip',
       
       res.json(roundTrips);
     } catch (error) {
+      console.error('Error in /fares/cheapest-round-trip:', error);
       next(error);
     }
   }
