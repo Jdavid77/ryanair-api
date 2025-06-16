@@ -3,8 +3,6 @@ name: Snyk
 on:
   workflow_call:
 
-
-
 jobs:
   snyk-sca:
     name: Snyk SCA Analysis
@@ -13,18 +11,18 @@ jobs:
       contents: read
       security-events: write
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4.2.2
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
 
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/node@master
-      continue-on-error: true
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --sarif-file-output=snyk-results.sarif --severity-threshold=high
-    
-    - name: Upload Snyk results to GitHub Code Scanning
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: snyk-results.sarif
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk-results.sarif --severity-threshold=high
+
+      - name: Upload Snyk results to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snyk-results.sarif

@@ -41,25 +41,29 @@ app.get('/', (req, res) => {
     endpoints: {
       airports: '/api/airports',
       fares: '/api/fares',
-      flights: '/api/flights'
-    }
+      flights: '/api/flights',
+    },
   });
 });
 
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
+  res.json({
+    status: 'ok',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
   });
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
-  explorer: true,
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'Ryanair API Documentation'
-}));
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(specs, {
+    explorer: true,
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'Ryanair API Documentation',
+  })
+);
 
 app.use('/api/airports', airportRoutes);
 app.use('/api/fares', fareRoutes);

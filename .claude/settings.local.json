@@ -15,7 +15,10 @@
       "Bash(node:*)",
       "Bash(npm ls:*)",
       "Bash(npm audit:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(npm run lint)",
+      "Bash(find:*)",
+      "Bash(npm run format:check:*)"
     ],
     "deny": []
   }

@@ -1,8 +1,13 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { ryanairClient } from '../utils/ryanairClient.js';
-import { validateIataParams, validateDateParams, validateRequiredParams, validateDateRange } from '../middleware/validation.js';
-import { validatePassengerCount } from '../utils/validation.js';
+import {
+  validateIataParams,
+  validateDateParams,
+  validateRequiredParams,
+  validateDateRange,
+} from '../middleware/validation.js';
 import { sendValidationError } from '../utils/responseHelpers.js';
+import { CheapestFares, RoundTrip } from '../types/index.js';
 
 const router = Router();
 
@@ -66,21 +71,22 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/cheapest-per-day', 
+router.get(
+  '/cheapest-per-day',
   validateRequiredParams(['from', 'to', 'startDate']),
   validateIataParams('from', 'to'),
   validateDateParams('startDate'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { from, to, startDate, currency } = req.query;
-      
-      const result = await ryanairClient.fares.getCheapestPerDay(
+
+      const result: CheapestFares = await ryanairClient.fares.getCheapestPerDay(
         from as string,
         to as string,
         startDate as string,
         (currency as string) || 'EUR'
       );
-      
+
       res.json(result);
     } catch (error) {
       console.error('Error in /fares/cheapest-per-day:', error);
@@ -89,7 +95,8 @@ router.get('/cheapest-per-day',
   }
 );
 
-router.get('/daily-range',
+router.get(
+  '/daily-range',
   validateRequiredParams(['from', 'to', 'startDate', 'endDate']),
   validateIataParams('from', 'to'),
   validateDateParams('startDate', 'endDate'),
@@ -97,7 +104,7 @@ router.get('/daily-range',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { from, to, startDate, endDate, currency } = req.query;
-      
+
       const result = await ryanairClient.fares.findDailyFaresInRange(
         from as string,
         to as string,
@@ -105,7 +112,7 @@ router.get('/daily-range',
         endDate as string,
         (currency as string) || 'EUR'
       );
-      
+
       res.json(result);
     } catch (error) {
       console.error('Error in /fares/daily-range:', error);
@@ -114,7 +121,8 @@ router.get('/daily-range',
   }
 );
 
-router.get('/cheapest-round-trip',
+router.get(
+  '/cheapest-round-trip',
   validateRequiredParams(['from', 'to', 'startDate', 'endDate']),
   validateIataParams('from', 'to'),
   validateDateParams('startDate', 'endDate'),
@@ -122,13 +130,13 @@ router.get('/cheapest-round-trip',
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { from, to, startDate, endDate, currency, limit } = req.query;
-      
+
       const limitNum = limit ? parseInt(limit as string) : 10;
       if (isNaN(limitNum) || limitNum < 1 || limitNum > 100) {
         return sendValidationError(res, 'Limit must be a number between 1 and 100', 'limit');
       }
-      
-      const roundTrips = await ryanairClient.fares.findCheapestRoundTrip(
+
+      const roundTrips: RoundTrip[] = await ryanairClient.fares.findCheapestRoundTrip(
         from as string,
         to as string,
         startDate as string,
@@ -136,7 +144,7 @@ router.get('/cheapest-round-trip',
         (currency as string) || 'EUR',
         limitNum
       );
-      
+
       res.json(roundTrips);
     } catch (error) {
       console.error('Error in /fares/cheapest-round-trip:', error);

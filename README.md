@@ -17,16 +17,19 @@ A production-ready Node.js REST API built with Express.js and TypeScript that pr
 ## Quick Start
 
 1. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 2. **Set up environment**:
+
    ```bash
    cp .env.example .env
    ```
 
 3. **Run in development**:
+
    ```bash
    npm run dev
    ```

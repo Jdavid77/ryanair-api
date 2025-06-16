@@ -6,3 +6,4 @@ dist/
 .vscode/
 *.tgz
 *.tar.gz
+.claude/

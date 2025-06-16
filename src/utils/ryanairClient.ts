@@ -6,5 +6,5 @@ import { airports, fares, flights } from '@2bad/ryanair';
 export const ryanairClient = {
   airports,
   fares,
-  flights
+  flights,
 };
