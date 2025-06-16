@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: gha-runner-scale-set-ryanair
     permissions:
       contents: write
       packages: write
