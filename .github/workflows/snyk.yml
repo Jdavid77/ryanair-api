@@ -3,11 +3,15 @@ name: Snyk
 on:
   workflow_call:
 
+
+
 jobs:
   snyk-sca:
     name: Snyk SCA Analysis
     runs-on: gha-runner-scale-set-ryanair
-
+    permissions:
+      contents: read
+      security-events: write
     steps:
     - name: Checkout code
       uses: actions/checkout@v4.2.2
