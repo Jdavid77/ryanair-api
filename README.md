@@ -72,6 +72,7 @@ PORT=3000
 NODE_ENV=development
 RATE_LIMIT_WINDOW_MS=900000  # 15 minutes
 RATE_LIMIT_MAX=100           # Max requests per window
+API_URL=http://localhost:3000
 ```
 
 ## Error Handling
