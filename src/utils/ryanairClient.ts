@@ -1,17 +1,10 @@
 /**
- * Centralized Ryanair API client with dynamic imports
+ * Centralized Ryanair API client with pre-loaded modules
  */
+import { airports, fares, flights } from '@2bad/ryanair';
 
-let ryanairModules: {
-  airports?: any;
-  fares?: any;
-  flights?: any;
-} = {};
-
-export const getRyanairModule = async (moduleName: 'airports' | 'fares' | 'flights') => {
-  if (!ryanairModules[moduleName]) {
-    const ryanairPackage = await import('@2bad/ryanair');
-    ryanairModules[moduleName] = ryanairPackage[moduleName];
-  }
-  return ryanairModules[moduleName];
+export const ryanairClient = {
+  airports,
+  fares,
+  flights
 };
