@@ -57,7 +57,7 @@ const options = {
                 'application/json': {
                   schema: {
                     type: 'array',
-                    items: { $ref: '#/components/schemas/Airport' }
+                    items: { $ref: '#/components/schemas/FilteredAirport' }
                   }
                 }
               }
@@ -375,7 +375,7 @@ const options = {
                 'application/json': {
                   schema: {
                     type: 'array',
-                    items: { $ref: '#/components/schemas/Airport' }
+                    items: { $ref: '#/components/schemas/FilteredAirport' }
                   }
                 }
               }
@@ -681,6 +681,15 @@ const options = {
                 currency: { type: 'string' }
               }
             }
+          }
+        },
+        FilteredAirport: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            code: { type: 'string', description: 'IATA airport code' },
+            country: { type: 'string' },
+            timezone: { type: 'string' }
           }
         },
         Fare: {
