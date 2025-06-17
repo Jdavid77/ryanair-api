@@ -1,8 +1,13 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { ryanairClient } from '../utils/ryanairClient.js';
-import { validateIataParams, validateDateParams, validateRequiredParams } from '../middleware/validation.js';
+import {
+  validateIataParams,
+  validateDateParams,
+  validateRequiredParams,
+} from '../middleware/validation.js';
 import { validatePassengerCount } from '../utils/validation.js';
 import { sendValidationError } from '../utils/responseHelpers.js';
+import { AvailabilityOptions, AvailabilityResponse } from '../types/index.js';
 
 const router = Router();
 
@@ -13,13 +18,14 @@ const router = Router();
  *   description: Flight availability and dates
  */
 
-router.get('/dates',
+router.get(
+  '/dates',
   validateRequiredParams(['from', 'to']),
   validateIataParams('from', 'to'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { from, to } = req.query;
-      
+
       const dates = await ryanairClient.flights.getDates(from as string, to as string);
       res.json(dates);
     } catch (error) {
@@ -92,73 +98,62 @@ router.get('/dates',
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/available',
+router.get(
+  '/available',
   validateRequiredParams(['from', 'to']),
   validateIataParams('from', 'to'),
   validateDateParams('dateOut', 'dateIn'),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {
-        from,
-        to,
-        dateOut,
-        dateIn,
-        adults,
-        children,
-        teens,
-        infants,
-        promoCode
-      } = req.query;
-      
+      const { from, to, dateOut, dateIn, adults, children, teens, infants, promoCode } = req.query;
+
       // Validate passenger counts
       const adultsNum = adults ? parseInt(adults as string) : 1;
       const childrenNum = children ? parseInt(children as string) : 0;
       const teensNum = teens ? parseInt(teens as string) : 0;
       const infantsNum = infants ? parseInt(infants as string) : 0;
-      
+
       if (!validatePassengerCount(adultsNum, 1, 9)) {
         return sendValidationError(res, 'Adults must be a number between 1 and 9', 'adults');
       }
-      
+
       if (!validatePassengerCount(childrenNum, 0, 9)) {
         return sendValidationError(res, 'Children must be a number between 0 and 9', 'children');
       }
-      
+
       if (!validatePassengerCount(teensNum, 0, 9)) {
         return sendValidationError(res, 'Teens must be a number between 0 and 9', 'teens');
       }
-      
+
       if (!validatePassengerCount(infantsNum, 0, 9)) {
         return sendValidationError(res, 'Infants must be a number between 0 and 9', 'infants');
       }
-      
+
       const totalPassengers = adultsNum + childrenNum + teensNum + infantsNum;
       if (totalPassengers > 9) {
         return sendValidationError(res, 'Total passengers cannot exceed 9');
       }
-      
-      const availabilityOptions: any = {
+
+      const availabilityOptions: Partial<AvailabilityOptions> = {
         Origin: from as string,
         Destination: to as string,
-        ADT: adultsNum,
-        CHD: childrenNum,
-        TEEN: teensNum,
-        INF: infantsNum
+        ADT: adultsNum.toString(),
+        CHD: childrenNum.toString(),
+        TEEN: teensNum.toString(),
+        INF: infantsNum.toString(),
+        DateOut: (dateOut as string) || '',
       };
-      
-      if (dateOut) {
-        availabilityOptions.DateOut = dateOut as string;
-      }
-      
+
       if (dateIn) {
         availabilityOptions.DateIn = dateIn as string;
       }
-      
+
       if (promoCode) {
         availabilityOptions.promoCode = promoCode as string;
       }
-      
-      const availability = await ryanairClient.flights.getAvailable(availabilityOptions);
+
+      const availability: AvailabilityResponse =
+        await ryanairClient.flights.getAvailable(availabilityOptions);
       res.json(availability);
     } catch (error) {
       console.error('Error in /flights/available:', error);

@@ -3,15 +3,12 @@ name: Trivy
 on:
   workflow_call:
 
-
-    
 jobs:
   trivy-scan:
     runs-on: gha-runner-scale-set-ryanair
     permissions:
       contents: read
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v4.2.2
 
@@ -21,9 +18,9 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.30.0
         with:
-          image-ref: "ryanair-api:latest"
-          format: "table"
-          exit-code: "0"
+          image-ref: 'ryanair-api:latest'
+          format: 'table'
+          exit-code: '0'
           ignore-unfixed: true
-          vuln-type: "os,library"
-          severity: "CRITICAL,HIGH"
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'

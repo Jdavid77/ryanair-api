@@ -9,17 +9,19 @@ const options = {
     info: {
       title: 'Ryanair API',
       version: packageJson.version,
-      description: 'A production-ready REST API for accessing Ryanair flight data, airports, and fare information',
+      description:
+        'A production-ready REST API for accessing Ryanair flight data, airports, and fare information',
       contact: {
         name: 'API Support',
-        url: 'https://github.com/example/ryanair-api'
-      }
+        url: 'https://github.com/example/ryanair-api',
+      },
     },
     servers: [
       {
         url: process.env.NODE_ENV === 'production' ? process.env.API_URL : 'http://localhost:3000',
-        description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server'
-      }
+        description:
+          process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
+      },
     ],
     paths: {
       '/health': {
@@ -37,14 +39,14 @@ const options = {
                       status: { type: 'string', example: 'ok' },
                       timestamp: { type: 'string', format: 'date-time' },
                       uptime: { type: 'number', description: 'Server uptime in seconds' },
-                      environment: { type: 'string', example: 'development' }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                      environment: { type: 'string', example: 'development' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/airports/active': {
         get: {
@@ -57,21 +59,21 @@ const options = {
                 'application/json': {
                   schema: {
                     type: 'array',
-                    items: { $ref: '#/components/schemas/FilteredAirport' }
-                  }
-                }
-              }
+                    items: { $ref: '#/components/schemas/FilteredAirport' },
+                  },
+                },
+              },
             },
             '500': {
               description: 'Internal server error',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/Error' }
-                }
-              }
-            }
-          }
-        }
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/airports/{code}': {
         get: {
@@ -84,31 +86,31 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: '3-letter IATA airport code',
-              example: 'DUB'
-            }
+              example: 'DUB',
+            },
           ],
           responses: {
             '200': {
               description: 'Airport information',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/Airport' }
-                }
-              }
+                  schema: { $ref: '#/components/schemas/AirportDetails' },
+                },
+              },
             },
             '400': {
               description: 'Invalid IATA code',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/Error' }
-                }
-              }
-            }
-          }
-        }
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/fares/cheapest-per-day': {
         get: {
@@ -121,10 +123,10 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: 'Departure airport IATA code',
-              example: 'DUB'
+              example: 'DUB',
             },
             {
               in: 'query',
@@ -132,10 +134,10 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: 'Arrival airport IATA code',
-              example: 'STN'
+              example: 'STN',
             },
             {
               in: 'query',
@@ -143,10 +145,10 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                format: 'date'
+                format: 'date',
               },
               description: 'Start date in YYYY-MM-DD format',
-              example: '2024-06-15'
+              example: '2024-06-15',
             },
             {
               in: 'query',
@@ -154,31 +156,31 @@ const options = {
               required: false,
               schema: {
                 type: 'string',
-                default: 'EUR'
+                default: 'EUR',
               },
               description: 'Currency code',
-              example: 'EUR'
-            }
+              example: 'EUR',
+            },
           ],
           responses: {
             '200': {
               description: 'Cheapest fares per day',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/Fare' }
-                }
-              }
+                  schema: { $ref: '#/components/schemas/Fare' },
+                },
+              },
             },
             '400': {
               description: 'Invalid parameters',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/Error' }
-                }
-              }
-            }
-          }
-        }
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/flights/available': {
         get: {
@@ -191,10 +193,10 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: 'Departure airport IATA code',
-              example: 'DUB'
+              example: 'DUB',
             },
             {
               in: 'query',
@@ -202,10 +204,10 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: 'Arrival airport IATA code',
-              example: 'STN'
+              example: 'STN',
             },
             {
               in: 'query',
@@ -213,10 +215,10 @@ const options = {
               required: false,
               schema: {
                 type: 'string',
-                format: 'date'
+                format: 'date',
               },
               description: 'Departure date in YYYY-MM-DD format',
-              example: '2024-06-15'
+              example: '2024-06-15',
             },
             {
               in: 'query',
@@ -226,30 +228,30 @@ const options = {
                 type: 'integer',
                 minimum: 1,
                 maximum: 9,
-                default: 1
+                default: 1,
               },
-              description: 'Number of adult passengers'
-            }
+              description: 'Number of adult passengers',
+            },
           ],
           responses: {
             '200': {
               description: 'Available flight options',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/FlightAvailability' }
-                }
-              }
+                  schema: { $ref: '#/components/schemas/FlightAvailability' },
+                },
+              },
             },
             '400': {
               description: 'Invalid parameters',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/Error' }
-                }
-              }
-            }
-          }
-        }
+                  schema: { $ref: '#/components/schemas/Error' },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/flights/dates': {
         get: {
@@ -262,10 +264,10 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: 'Departure airport IATA code',
-              example: 'DUB'
+              example: 'DUB',
             },
             {
               in: 'query',
@@ -273,11 +275,11 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: 'Arrival airport IATA code',
-              example: 'STN'
-            }
+              example: 'STN',
+            },
           ],
           responses: {
             '200': {
@@ -288,33 +290,14 @@ const options = {
                     type: 'array',
                     items: {
                       type: 'string',
-                      format: 'date'
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      '/api/airports/active-v3': {
-        get: {
-          summary: 'Get all active airports (v3 format)',
-          tags: ['Airports'],
-          responses: {
-            '200': {
-              description: 'List of all active airports in v3 format',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'array',
-                    items: { $ref: '#/components/schemas/Airport' }
-                  }
-                }
-              }
-            }
-          }
-        }
+                      format: 'date',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/airports/closest': {
         get: {
@@ -325,12 +308,12 @@ const options = {
               description: 'Closest airport information',
               content: {
                 'application/json': {
-                  schema: { $ref: '#/components/schemas/Airport' }
-                }
-              }
-            }
-          }
-        }
+                  schema: { $ref: '#/components/schemas/ClosestAirport' },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/airports/nearby': {
         get: {
@@ -343,13 +326,13 @@ const options = {
                 'application/json': {
                   schema: {
                     type: 'array',
-                    items: { $ref: '#/components/schemas/Airport' }
-                  }
-                }
-              }
-            }
-          }
-        }
+                    items: { $ref: '#/components/schemas/ClosestAirport' },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/airports/{code}/destinations': {
         get: {
@@ -362,11 +345,11 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: '3-letter IATA airport code',
-              example: 'DUB'
-            }
+              example: 'DUB',
+            },
           ],
           responses: {
             '200': {
@@ -375,13 +358,13 @@ const options = {
                 'application/json': {
                   schema: {
                     type: 'array',
-                    items: { $ref: '#/components/schemas/FilteredAirport' }
-                  }
-                }
-              }
-            }
-          }
-        }
+                    items: { $ref: '#/components/schemas/FilteredAirport' },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/airports/{code}/schedules': {
         get: {
@@ -394,11 +377,11 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: '3-letter IATA airport code',
-              example: 'DUB'
-            }
+              example: 'DUB',
+            },
           ],
           responses: {
             '200': {
@@ -416,17 +399,17 @@ const options = {
                             origin: { type: 'string' },
                             destination: { type: 'string' },
                             flightNumber: { type: 'string' },
-                            departureTime: { type: 'string' }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                            departureTime: { type: 'string' },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/airports/{from}/routes/{to}': {
         get: {
@@ -439,10 +422,10 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: 'Departure airport IATA code',
-              example: 'DUB'
+              example: 'DUB',
             },
             {
               in: 'path',
@@ -450,11 +433,11 @@ const options = {
               required: true,
               schema: {
                 type: 'string',
-                pattern: '^[A-Z]{3}$'
+                pattern: '^[A-Z]{3}$',
               },
               description: 'Arrival airport IATA code',
-              example: 'STN'
-            }
+              example: 'STN',
+            },
           ],
           responses: {
             '200': {
@@ -465,14 +448,14 @@ const options = {
                     type: 'array',
                     items: {
                       type: 'array',
-                      items: { type: 'string' }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                      items: { type: 'string' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/fares/daily-range': {
         get: {
@@ -485,7 +468,7 @@ const options = {
               required: true,
               schema: { type: 'string', pattern: '^[A-Z]{3}$' },
               description: 'Departure airport IATA code',
-              example: 'DUB'
+              example: 'DUB',
             },
             {
               in: 'query',
@@ -493,7 +476,7 @@ const options = {
               required: true,
               schema: { type: 'string', pattern: '^[A-Z]{3}$' },
               description: 'Arrival airport IATA code',
-              example: 'STN'
+              example: 'STN',
             },
             {
               in: 'query',
@@ -501,7 +484,7 @@ const options = {
               required: true,
               schema: { type: 'string', format: 'date' },
               description: 'Start date in YYYY-MM-DD format',
-              example: '2024-06-15'
+              example: '2024-06-15',
             },
             {
               in: 'query',
@@ -509,7 +492,7 @@ const options = {
               required: true,
               schema: { type: 'string', format: 'date' },
               description: 'End date in YYYY-MM-DD format',
-              example: '2024-06-30'
+              example: '2024-06-30',
             },
             {
               in: 'query',
@@ -517,8 +500,8 @@ const options = {
               required: false,
               schema: { type: 'string', default: 'EUR' },
               description: 'Currency code',
-              example: 'EUR'
-            }
+              example: 'EUR',
+            },
           ],
           responses: {
             '200': {
@@ -527,13 +510,13 @@ const options = {
                 'application/json': {
                   schema: {
                     type: 'array',
-                    items: { $ref: '#/components/schemas/Fare' }
-                  }
-                }
-              }
-            }
-          }
-        }
+                    items: { $ref: '#/components/schemas/Fare' },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       '/api/fares/cheapest-round-trip': {
         get: {
@@ -546,7 +529,7 @@ const options = {
               required: true,
               schema: { type: 'string', pattern: '^[A-Z]{3}$' },
               description: 'Origin airport IATA code',
-              example: 'DUB'
+              example: 'DUB',
             },
             {
               in: 'query',
@@ -554,7 +537,7 @@ const options = {
               required: true,
               schema: { type: 'string', pattern: '^[A-Z]{3}$' },
               description: 'Destination airport IATA code',
-              example: 'STN'
+              example: 'STN',
             },
             {
               in: 'query',
@@ -562,7 +545,7 @@ const options = {
               required: true,
               schema: { type: 'string', format: 'date' },
               description: 'Outbound date in YYYY-MM-DD format',
-              example: '2024-06-15'
+              example: '2024-06-15',
             },
             {
               in: 'query',
@@ -570,7 +553,7 @@ const options = {
               required: true,
               schema: { type: 'string', format: 'date' },
               description: 'Return date in YYYY-MM-DD format',
-              example: '2024-06-30'
+              example: '2024-06-30',
             },
             {
               in: 'query',
@@ -578,7 +561,7 @@ const options = {
               required: false,
               schema: { type: 'string', default: 'EUR' },
               description: 'Currency code',
-              example: 'EUR'
+              example: 'EUR',
             },
             {
               in: 'query',
@@ -586,8 +569,8 @@ const options = {
               required: false,
               schema: { type: 'integer', minimum: 1, maximum: 100, default: 10 },
               description: 'Maximum number of results',
-              example: 10
-            }
+              example: 10,
+            },
           ],
           responses: {
             '200': {
@@ -605,36 +588,36 @@ const options = {
                           type: 'object',
                           properties: {
                             value: { type: 'number' },
-                            currencyCode: { type: 'string' }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                            currencyCode: { type: 'string' },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
     tags: [
       {
         name: 'System',
-        description: 'System health and monitoring'
+        description: 'System health and monitoring',
       },
       {
         name: 'Airports',
-        description: 'Airport information and operations'
+        description: 'Airport information and operations',
       },
       {
         name: 'Fares',
-        description: 'Flight fare search and pricing'
+        description: 'Flight fare search and pricing',
       },
       {
         name: 'Flights',
-        description: 'Flight availability and dates'
-      }
+        description: 'Flight availability and dates',
+      },
     ],
     components: {
       schemas: {
@@ -643,13 +626,13 @@ const options = {
           properties: {
             error: {
               type: 'string',
-              description: 'Error type'
+              description: 'Error type',
             },
             message: {
               type: 'string',
-              description: 'Error message'
-            }
-          }
+              description: 'Error message',
+            },
+          },
         },
         Airport: {
           type: 'object',
@@ -662,26 +645,26 @@ const options = {
               type: 'object',
               properties: {
                 latitude: { type: 'number' },
-                longitude: { type: 'number' }
-              }
+                longitude: { type: 'number' },
+              },
             },
             timeZone: { type: 'string' },
             city: {
               type: 'object',
               properties: {
                 name: { type: 'string' },
-                code: { type: 'string' }
-              }
+                code: { type: 'string' },
+              },
             },
             country: {
               type: 'object',
               properties: {
                 name: { type: 'string' },
                 code: { type: 'string' },
-                currency: { type: 'string' }
-              }
-            }
-          }
+                currency: { type: 'string' },
+              },
+            },
+          },
         },
         FilteredAirport: {
           type: 'object',
@@ -689,8 +672,28 @@ const options = {
             name: { type: 'string' },
             code: { type: 'string', description: 'IATA airport code' },
             country: { type: 'string' },
-            timezone: { type: 'string' }
-          }
+            timezone: { type: 'string' },
+          },
+        },
+        AirportDetails: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', example: 'Dublin' },
+            timezone: { type: 'string', example: 'Europe/Dublin' },
+            code: { type: 'string', example: 'DUB' },
+            city: { type: 'string', example: 'Dublin' },
+            region: { type: 'string', example: 'Europe' },
+            country: { type: 'string', example: 'Ireland' },
+            currency: { type: 'string', example: 'EUR' },
+          },
+        },
+        ClosestAirport: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', example: 'Dublin' },
+            code: { type: 'string', example: 'DUB' },
+            country: { type: 'string', example: 'Ireland' },
+          },
         },
         Fare: {
           type: 'object',
@@ -703,12 +706,12 @@ const options = {
                   type: 'object',
                   properties: {
                     value: { type: 'number' },
-                    currencyCode: { type: 'string' }
-                  }
-                }
-              }
-            }
-          }
+                    currencyCode: { type: 'string' },
+                  },
+                },
+              },
+            },
+          },
         },
         FlightAvailability: {
           type: 'object',
@@ -743,25 +746,25 @@ const options = {
                                     destination: { type: 'string' },
                                     flightNumber: { type: 'string' },
                                     time: { type: 'array', items: { type: 'string' } },
-                                    duration: { type: 'string' }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+                                    duration: { type: 'string' },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
-  apis: []
+  apis: [],
 };
 
 export const specs = swaggerJsdoc(options);
