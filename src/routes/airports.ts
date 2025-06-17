@@ -41,7 +41,7 @@ const router = Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/active', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/active', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const result = await ryanairClient.airports.getActive();
     const filteredResult: AirportSummary[] = result.map((airport: Airport) => ({
@@ -57,7 +57,7 @@ router.get('/active', async (req: Request, res: Response, next: NextFunction) =>
   }
 });
 
-router.get('/closest', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/closest', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const airport = await ryanairClient.airports.getClosest();
     const filteredResult: ClosestAirport = {
@@ -72,7 +72,7 @@ router.get('/closest', async (req: Request, res: Response, next: NextFunction) =
   }
 });
 
-router.get('/nearby', async (req: Request, res: Response, next: NextFunction) => {
+router.get('/nearby', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const result = await ryanairClient.airports.getNearby();
     const filteredResult: ClosestAirport[] = result.map((airport: AirportShort) => ({
@@ -121,7 +121,7 @@ router.get('/nearby', async (req: Request, res: Response, next: NextFunction) =>
 router.get(
   '/:code',
   validateIataParams('code'),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { code } = req.params;
       const airport = await ryanairClient.airports.getInfo(code);
@@ -145,7 +145,7 @@ router.get(
 router.get(
   '/:code/destinations',
   validateIataParams('code'),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { code } = req.params;
       const result = await ryanairClient.airports.getDestinations(code);
@@ -166,7 +166,7 @@ router.get(
 router.get(
   '/:code/schedules',
   validateIataParams('code'),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { code } = req.params;
       const schedules = await ryanairClient.airports.getSchedules(code);
@@ -181,7 +181,7 @@ router.get(
 router.get(
   '/:from/routes/:to',
   validateIataParams('from', 'to'),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { from, to } = req.params;
       const routes = await ryanairClient.airports.findRoutes(from, to);

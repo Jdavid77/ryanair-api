@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    runs-on: gha-runner-scale-set-ryanair
+    runs-on: ryanair-runner
     permissions:
       contents: write
       packages: write

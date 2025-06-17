@@ -6,7 +6,7 @@ on:
 
 jobs:
   release-please:
-    runs-on: gha-runner-scale-set-ryanair
+    runs-on: ryanair-runner
     steps:
       - name: Release Please
         id: release

@@ -11,7 +11,7 @@ import {
 } from '../utils/responseHelpers.js';
 
 export const validateIataParams = (...paramNames: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const invalidCodes: string[] = [];
 
     for (const paramName of paramNames) {
@@ -22,7 +22,8 @@ export const validateIataParams = (...paramNames: string[]) => {
     }
 
     if (invalidCodes.length > 0) {
-      return sendInvalidIataError(res, invalidCodes);
+      sendInvalidIataError(res, invalidCodes);
+      return;
     }
 
     // Convert to uppercase for consistency
@@ -40,7 +41,7 @@ export const validateIataParams = (...paramNames: string[]) => {
 };
 
 export const validateDateParams = (...paramNames: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const invalidDates: string[] = [];
 
     for (const paramName of paramNames) {
@@ -51,7 +52,8 @@ export const validateDateParams = (...paramNames: string[]) => {
     }
 
     if (invalidDates.length > 0) {
-      return sendInvalidDateError(res, invalidDates);
+      sendInvalidDateError(res, invalidDates);
+      return;
     }
 
     next();
@@ -62,7 +64,7 @@ export const validateRequiredParams = (
   paramNames: string[],
   source: 'query' | 'params' = 'query'
 ) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const data = source === 'query' ? req.query : req.params;
     const missing: string[] = [];
 
@@ -73,7 +75,8 @@ export const validateRequiredParams = (
     }
 
     if (missing.length > 0) {
-      return sendMissingParametersError(res, missing);
+      sendMissingParametersError(res, missing);
+      return;
     }
 
     next();
@@ -81,12 +84,13 @@ export const validateRequiredParams = (
 };
 
 export const validateDateRange = (startDateParam = 'startDate', endDateParam = 'endDate') => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const startDate = req.query[startDateParam] as string;
     const endDate = req.query[endDateParam] as string;
 
     if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
-      return sendDateRangeError(res);
+      sendDateRangeError(res);
+      return;
     }
 
     next();

@@ -6,7 +6,7 @@ on:
 jobs:
   snyk-sca:
     name: Snyk SCA Analysis
-    runs-on: gha-runner-scale-set-ryanair
+    runs-on: ryanair-runner
     permissions:
       contents: read
       security-events: write
@@ -16,7 +16,7 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
-        continue-on-error: true
+        continue-on-error: false
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:

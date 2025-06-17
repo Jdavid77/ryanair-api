@@ -22,7 +22,7 @@ router.get(
   '/dates',
   validateRequiredParams(['from', 'to']),
   validateIataParams('from', 'to'),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { from, to } = req.query;
 
@@ -103,7 +103,7 @@ router.get(
   validateRequiredParams(['from', 'to']),
   validateIataParams('from', 'to'),
   validateDateParams('dateOut', 'dateIn'),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { from, to, dateOut, dateIn, adults, children, teens, infants, promoCode } = req.query;
 
@@ -114,24 +114,29 @@ router.get(
       const infantsNum = infants ? parseInt(infants as string) : 0;
 
       if (!validatePassengerCount(adultsNum, 1, 9)) {
-        return sendValidationError(res, 'Adults must be a number between 1 and 9', 'adults');
+        sendValidationError(res, 'Adults must be a number between 1 and 9', 'adults');
+        return;
       }
 
       if (!validatePassengerCount(childrenNum, 0, 9)) {
-        return sendValidationError(res, 'Children must be a number between 0 and 9', 'children');
+        sendValidationError(res, 'Children must be a number between 0 and 9', 'children');
+        return;
       }
 
       if (!validatePassengerCount(teensNum, 0, 9)) {
-        return sendValidationError(res, 'Teens must be a number between 0 and 9', 'teens');
+        sendValidationError(res, 'Teens must be a number between 0 and 9', 'teens');
+        return;
       }
 
       if (!validatePassengerCount(infantsNum, 0, 9)) {
-        return sendValidationError(res, 'Infants must be a number between 0 and 9', 'infants');
+        sendValidationError(res, 'Infants must be a number between 0 and 9', 'infants');
+        return;
       }
 
       const totalPassengers = adultsNum + childrenNum + teensNum + infantsNum;
       if (totalPassengers > 9) {
-        return sendValidationError(res, 'Total passengers cannot exceed 9');
+        sendValidationError(res, 'Total passengers cannot exceed 9');
+        return;
       }
 
       const availabilityOptions: Partial<AvailabilityOptions> = {
