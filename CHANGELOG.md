@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Jdavid77/ryanair-api/compare/v1.1.0...v1.2.0) (2025-06-17)
+
+
+### Features
+
+* update to express v5 ([#22](https://github.com/Jdavid77/ryanair-api/issues/22)) ([27b7b8c](https://github.com/Jdavid77/ryanair-api/commit/27b7b8cf0805ef73a7e2b6dbee7f12e4a9b9a247))
+
 ## [1.1.0](https://github.com/Jdavid77/ryanair-api/compare/v1.0.1...v1.1.0) (2025-06-17)
 
 
