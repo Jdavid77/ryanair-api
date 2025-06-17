@@ -13,10 +13,12 @@ import flightRoutes from './routes/flights.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { specs } from './swagger.js';
+import { readFileSync } from 'fs';
 
 dotenv.config();
 
 const app = express();
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 const limiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutes
@@ -36,7 +38,7 @@ app.use(limiter);
 app.get('/', (req, res) => {
   res.json({
     message: 'Ryanair API',
-    version: '1.0.0',
+    version: packageJson.version,
     documentation: '/api-docs',
     endpoints: {
       airports: '/api/airports',

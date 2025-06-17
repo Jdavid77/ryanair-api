@@ -76,7 +76,7 @@ router.get(
   validateRequiredParams(['from', 'to', 'startDate']),
   validateIataParams('from', 'to'),
   validateDateParams('startDate'),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { from, to, startDate, currency } = req.query;
 
@@ -101,7 +101,7 @@ router.get(
   validateIataParams('from', 'to'),
   validateDateParams('startDate', 'endDate'),
   validateDateRange(),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { from, to, startDate, endDate, currency } = req.query;
 
@@ -127,13 +127,14 @@ router.get(
   validateIataParams('from', 'to'),
   validateDateParams('startDate', 'endDate'),
   validateDateRange(),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { from, to, startDate, endDate, currency, limit } = req.query;
 
       const limitNum = limit ? parseInt(limit as string) : 10;
       if (isNaN(limitNum) || limitNum < 1 || limitNum > 100) {
-        return sendValidationError(res, 'Limit must be a number between 1 and 100', 'limit');
+        sendValidationError(res, 'Limit must be a number between 1 and 100', 'limit');
+        return;
       }
 
       const roundTrips: RoundTrip[] = await ryanairClient.fares.findCheapestRoundTrip(
