@@ -6,7 +6,7 @@ on:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: 'gha-runner-scale-set-ryanair'
+    runs-on: ryanair-runner
     permissions:
       actions: read
       contents: read
