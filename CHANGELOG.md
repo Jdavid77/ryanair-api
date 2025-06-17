@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Jdavid77/ryanair-api/compare/v1.0.1...v1.1.0) (2025-06-17)
+
+
+### Features
+
+* add linters + update endpoints response ([#15](https://github.com/Jdavid77/ryanair-api/issues/15)) ([2c3ba2d](https://github.com/Jdavid77/ryanair-api/commit/2c3ba2d88379d4760745e97a51d7414e5093456f))
+
 ## [1.0.1](https://github.com/Jdavid77/ryanair-api/compare/v1.0.0...v1.0.1) (2025-06-15)
 
 ### Bug Fixes
