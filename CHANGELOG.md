@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/Jdavid77/ryanair-api/compare/v1.2.0...v1.2.1) (2025-06-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency express-rate-limit to v7.5.1 ([#25](https://github.com/Jdavid77/ryanair-api/issues/25)) ([b0374b3](https://github.com/Jdavid77/ryanair-api/commit/b0374b32aed734b3ed70cfa1f99fa3a55f74e021))
+
 ## [1.2.0](https://github.com/Jdavid77/ryanair-api/compare/v1.1.0...v1.2.0) (2025-06-17)
 
 
