@@ -8,7 +8,6 @@ A production-ready Node.js REST API built with Express.js and TypeScript that pr
 
 - 🛫 **Airport Information**: Get active airports, destinations, schedules, and routes
 - 💰 **Fare Search**: Find cheapest fares, daily fare ranges, and round-trip deals
-- ✈️ **Flight Availability**: Check available flights and dates
 - 🔒 **Production Ready**: Rate limiting, CORS, security headers, compression
 - 📝 **TypeScript**: Full type safety and IntelliSense support
 - 🛡️ **Error Handling**: Comprehensive validation and error responses
@@ -47,14 +46,11 @@ The API will be available at `http://localhost:3000` and the interactive documen
 ### Airports (`/api/airports`)
 
 - `GET /api/airports/active` - Get all active airports
-- `GET /api/airports/active-v3` - Get all active airports (v3 format)
 - `GET /api/airports/closest` - Get closest airport based on IP
 - `GET /api/airports/nearby` - Get nearby airports based on IP
 - `GET /api/airports/:code` - Get airport info by IATA code
 - `GET /api/airports/:code/destinations` - Get destinations from airport
 - `GET /api/airports/:code/schedules` - Get flight schedules from airport
-- `GET /api/airports/:from/schedules/:to` - Get schedules between airports
-- `GET /api/airports/:from/schedules/:to/:year/:month` - Get monthly schedules
 - `GET /api/airports/:from/routes/:to` - Find routes between airports
 
 ### Fares (`/api/fares`)
@@ -63,10 +59,6 @@ The API will be available at `http://localhost:3000` and the interactive documen
 - `GET /api/fares/daily-range?from=DUB&to=STN&startDate=2024-06-15&endDate=2024-06-30&currency=EUR`
 - `GET /api/fares/cheapest-round-trip?from=DUB&to=STN&startDate=2024-06-15&endDate=2024-06-30&currency=EUR&limit=10`
 
-### Flights (`/api/flights`)
-
-- `GET /api/flights/dates?from=DUB&to=STN` - Get available flight dates
-- `GET /api/flights/available?from=DUB&to=STN&dateOut=2024-06-15&adults=1&children=0`
 
 ## Environment Variables
 

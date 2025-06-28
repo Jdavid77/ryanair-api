@@ -20,15 +20,6 @@ export type {
   CheapestFares,
   RoundTrip,
 
-  // Flight types
-  AvailabilityOptions,
-  Segment,
-  FlightFare,
-  FareType,
-  Flight,
-  FlightDate,
-  Trip,
-  AvailabilityResponse,
 } from '@2bad/ryanair';
 
 // Custom types for our API responses (simplified versions)
@@ -55,18 +46,3 @@ export interface AirportDetails {
   currency: string;
 }
 
-// Flight search options interface (our simplified version)
-export interface FlightSearchOptions {
-  Origin: string;
-  Destination: string;
-  ADT: number;
-  CHD: number;
-  TEEN: number;
-  INF: number;
-  DateOut: string;
-  DateIn?: string;
-  FlexDaysOut?: number;
-  FlexDaysIn?: number;
-  RoundTrip?: boolean;
-  ToUs?: string;
-}

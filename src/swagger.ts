@@ -182,123 +182,6 @@ const options = {
           },
         },
       },
-      '/api/flights/available': {
-        get: {
-          summary: 'Search for available flights',
-          tags: ['Flights'],
-          parameters: [
-            {
-              in: 'query',
-              name: 'from',
-              required: true,
-              schema: {
-                type: 'string',
-                pattern: '^[A-Z]{3}$',
-              },
-              description: 'Departure airport IATA code',
-              example: 'DUB',
-            },
-            {
-              in: 'query',
-              name: 'to',
-              required: true,
-              schema: {
-                type: 'string',
-                pattern: '^[A-Z]{3}$',
-              },
-              description: 'Arrival airport IATA code',
-              example: 'STN',
-            },
-            {
-              in: 'query',
-              name: 'dateOut',
-              required: false,
-              schema: {
-                type: 'string',
-                format: 'date',
-              },
-              description: 'Departure date in YYYY-MM-DD format',
-              example: '2024-06-15',
-            },
-            {
-              in: 'query',
-              name: 'adults',
-              required: false,
-              schema: {
-                type: 'integer',
-                minimum: 1,
-                maximum: 9,
-                default: 1,
-              },
-              description: 'Number of adult passengers',
-            },
-          ],
-          responses: {
-            '200': {
-              description: 'Available flight options',
-              content: {
-                'application/json': {
-                  schema: { $ref: '#/components/schemas/FlightAvailability' },
-                },
-              },
-            },
-            '400': {
-              description: 'Invalid parameters',
-              content: {
-                'application/json': {
-                  schema: { $ref: '#/components/schemas/Error' },
-                },
-              },
-            },
-          },
-        },
-      },
-      '/api/flights/dates': {
-        get: {
-          summary: 'Get available flight dates',
-          tags: ['Flights'],
-          parameters: [
-            {
-              in: 'query',
-              name: 'from',
-              required: true,
-              schema: {
-                type: 'string',
-                pattern: '^[A-Z]{3}$',
-              },
-              description: 'Departure airport IATA code',
-              example: 'DUB',
-            },
-            {
-              in: 'query',
-              name: 'to',
-              required: true,
-              schema: {
-                type: 'string',
-                pattern: '^[A-Z]{3}$',
-              },
-              description: 'Arrival airport IATA code',
-              example: 'STN',
-            },
-          ],
-          responses: {
-            '200': {
-              description: 'Array of available dates',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'array',
-                    items: {
-                      type: 'string',
-                      format: 'date',
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
       '/api/airports/closest': {
         get: {
           summary: 'Get closest airport based on IP',
@@ -614,10 +497,6 @@ const options = {
         name: 'Fares',
         description: 'Flight fare search and pricing',
       },
-      {
-        name: 'Flights',
-        description: 'Flight availability and dates',
-      },
     ],
     components: {
       schemas: {
@@ -707,54 +586,6 @@ const options = {
                   properties: {
                     value: { type: 'number' },
                     currencyCode: { type: 'string' },
-                  },
-                },
-              },
-            },
-          },
-        },
-        FlightAvailability: {
-          type: 'object',
-          properties: {
-            termsOfUse: { type: 'string' },
-            currency: { type: 'string' },
-            trips: {
-              type: 'array',
-              items: {
-                type: 'object',
-                properties: {
-                  origin: { type: 'string' },
-                  destination: { type: 'string' },
-                  dates: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        dateOut: { type: 'string' },
-                        flights: {
-                          type: 'array',
-                          items: {
-                            type: 'object',
-                            properties: {
-                              flightKey: { type: 'string' },
-                              segments: {
-                                type: 'array',
-                                items: {
-                                  type: 'object',
-                                  properties: {
-                                    origin: { type: 'string' },
-                                    destination: { type: 'string' },
-                                    flightNumber: { type: 'string' },
-                                    time: { type: 'array', items: { type: 'string' } },
-                                    duration: { type: 'string' },
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
                   },
                 },
               },
