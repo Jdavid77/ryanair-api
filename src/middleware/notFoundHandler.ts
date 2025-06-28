@@ -7,7 +7,6 @@ export const notFoundHandler = (req: Request, res: Response) => {
     availableEndpoints: {
       airports: '/api/airports',
       fares: '/api/fares',
-      flights: '/api/flights',
     },
   });
 };

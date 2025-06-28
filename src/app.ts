@@ -9,7 +9,6 @@ import swaggerUi from 'swagger-ui-express';
 
 import airportRoutes from './routes/airports.js';
 import fareRoutes from './routes/fares.js';
-import flightRoutes from './routes/flights.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { specs } from './swagger.js';
@@ -43,7 +42,6 @@ app.get('/', (req, res) => {
     endpoints: {
       airports: '/api/airports',
       fares: '/api/fares',
-      flights: '/api/flights',
     },
   });
 });
@@ -69,7 +67,6 @@ app.use(
 
 app.use('/api/airports', airportRoutes);
 app.use('/api/fares', fareRoutes);
-app.use('/api/flights', flightRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
