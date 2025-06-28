@@ -2,6 +2,8 @@ name: Snyk
 
 on:
   workflow_call:
+  schedule:
+    - cron: '0 2 * * 1' # Weekly on Mondays at 2 AM
 
 jobs:
   snyk-sca:
