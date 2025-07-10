@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/Jdavid77/ryanair-api/compare/v1.2.2...v1.2.3) (2025-07-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency dotenv to v17.2.0 ([#38](https://github.com/Jdavid77/ryanair-api/issues/38)) ([7f15e0d](https://github.com/Jdavid77/ryanair-api/commit/7f15e0dfc015d4517c6c1b331993398d1a2edd83))
+
 ## [1.2.2](https://github.com/Jdavid77/ryanair-api/compare/v1.2.1...v1.2.2) (2025-06-28)
 
 
