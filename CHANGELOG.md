@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.4](https://github.com/Jdavid77/ryanair-api/compare/v1.2.3...v1.2.4) (2025-07-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency compression to v1.8.1 ([#48](https://github.com/Jdavid77/ryanair-api/issues/48)) ([e2b39b1](https://github.com/Jdavid77/ryanair-api/commit/e2b39b10e55a8d7f94d4726ee3b47ae8059cadde))
+
 ## [1.2.3](https://github.com/Jdavid77/ryanair-api/compare/v1.2.2...v1.2.3) (2025-07-10)
 
 
