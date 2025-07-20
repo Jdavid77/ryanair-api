@@ -1,7 +1,12 @@
 name: Trivy
 
 on:
-  workflow_call:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 2 * * 1' # Weekly on Mondays at 2 AM
 
 jobs:
   trivy-scan:
