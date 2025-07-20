@@ -7,3 +7,4 @@ dist/
 *.tgz
 *.tar.gz
 .claude/
+package-lock.json

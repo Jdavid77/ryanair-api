@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/Jdavid77/ryanair-api/compare/v1.2.4...v1.2.5) (2025-07-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency morgan to v1.10.1 ([#49](https://github.com/Jdavid77/ryanair-api/issues/49)) ([baa02fc](https://github.com/Jdavid77/ryanair-api/commit/baa02fc6ee5bd62726ea889d5c001451a3a737e5))
+
 ## [1.2.4](https://github.com/Jdavid77/ryanair-api/compare/v1.2.3...v1.2.4) (2025-07-19)
 
 
